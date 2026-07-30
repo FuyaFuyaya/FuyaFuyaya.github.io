@@ -1,0 +1,54 @@
+/* ============================================
+   source/css/project-index.css
+   企劃索引頁專屬樣式
+   ============================================ */
+
+.page-title{font-family:"Klee One", cursive; font-size:1.4rem; margin:14px 0 6px;}
+.page-sub{font-family:"Caveat", cursive; font-size:1.15rem; color:var(--sage-dark); margin:0 0 40px;}
+
+.proj-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:30px;}
+
+.proj-card{
+  position:relative; background:var(--bg-card); padding:26px 24px 22px;
+  box-shadow:0 9px 18px rgba(66,58,62,0.13);
+  cursor:pointer; transition:transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration:none; color:inherit; display:block;
+}
+.proj-card:nth-child(1){transform:rotate(-1.4deg);}
+.proj-card:nth-child(2){transform:rotate(1.1deg);}
+.proj-card:nth-child(3){transform:rotate(-0.6deg);}
+.proj-card:hover{transform:translateY(-4px) rotate(0deg); box-shadow:0 15px 24px rgba(66,58,62,0.18);}
+
+.proj-card::before{
+  content:""; position:absolute; top:-9px; left:0; right:0; height:11px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='11'><polygon points='0,11 4,2 8,11 13,3 17,11 21,2 26,11 30,3 34,11' fill='white'/></svg>");
+  background-repeat:repeat-x; background-size:34px 11px;
+}
+.proj-card.v1 .tape{position:absolute; top:-8px; left:20px; width:48px;height:19px; background:repeating-linear-gradient(45deg, var(--sage), var(--sage) 5px, #e9efeb 5px, #e9efeb 10px); opacity:0.9; transform:rotate(-7deg); box-shadow:0 1px 2px rgba(0,0,0,0.12);}
+.proj-card.v2 .tape{position:absolute; top:-7px; right:24px; width:46px;height:18px; background:radial-gradient(var(--mustard) 30%, transparent 31%) 0 0/8px 8px, #faf1de; opacity:0.95; transform:rotate(8deg); box-shadow:0 1px 2px rgba(0,0,0,0.12);}
+.proj-card.v3 .tape{position:absolute; top:-8px; left:36px; width:44px;height:18px; background:repeating-linear-gradient(90deg, var(--mauve), var(--mauve) 4px, #efe8f0 4px, #efe8f0 8px); opacity:0.9; transform:rotate(-5deg); box-shadow:0 1px 2px rgba(0,0,0,0.12);}
+
+.status{display:inline-flex; align-items:center; gap:6px; font-family:"Klee One", cursive; font-size:0.72rem; margin-bottom:10px;}
+.status.doing{color:var(--sage-dark);} .status.doing .dot{background:var(--sage);}
+.status.think{color:var(--mustard-dark);} .status.think .dot{background:var(--mustard);}
+.status.idea{color:var(--text-soft);} .status.idea .dot{background:var(--text-soft); animation:none; opacity:0.6;}
+.status .dot{width:7px;height:7px;border-radius:50%; animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1; transform:scale(1);}50%{opacity:0.35; transform:scale(1.4);}}
+
+.proj-card h3{font-family:"Klee One", cursive; font-size:1.08rem; margin:0 0 8px;}
+.proj-card p{font-size:0.83rem; color:var(--text-soft); line-height:1.65; margin:0 0 16px;}
+
+.progress{height:8px; border-radius:5px; background:#EDE6DC; overflow:hidden;}
+.progress-fill{height:100%; border-radius:5px;}
+.progress-fill.active{
+  background:repeating-linear-gradient(45deg, var(--rose), var(--rose) 6px, var(--rose-dark) 6px, var(--rose-dark) 12px);
+  background-size:200% 100%; animation:stripes 1.8s linear infinite;
+}
+.progress-fill.think{background:var(--mauve); opacity:0.85;}
+.progress-fill.static{background:var(--text-soft); opacity:0.4;}
+@keyframes stripes{from{background-position:0 0;}to{background-position:34px 0;}}
+.progress-label{font-family:"Caveat", cursive; font-size:0.9rem; font-weight:700; color:var(--text-soft); margin-top:6px; text-align:right;}
+
+.proj-card.placeholder{opacity:0.55; cursor:default;}
+.proj-card.placeholder:hover{transform:none; box-shadow:0 9px 18px rgba(66,58,62,0.13);}
+.proj-card.placeholder .plus{font-family:"Caveat", cursive; font-size:1.6rem; color:var(--text-soft); text-align:center; padding:14px 0;}

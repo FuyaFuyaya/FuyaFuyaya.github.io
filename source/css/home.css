@@ -1,0 +1,93 @@
+/* ============================================
+   source/css/home.css
+   首頁專屬樣式
+   （還原為原本雛形的撕邊＋紙膠帶＋立體陰影做法）
+   ============================================ */
+
+.stamp-wrap{display:inline-block; margin:10px 0 40px 4px; transform:rotate(-4deg);}
+.stamp-svg{display:block;}
+.stamp-tagline{font-family:"Klee One", cursive; font-size:0.8rem; color:var(--text-soft); margin:8px 0 0 10px; transform:rotate(4deg);}
+
+/* 本月精選 — 本頁真正的主視覺 */
+.featured{
+  position:relative;
+  background:var(--bg-card);
+  padding:44px 40px 34px;
+  margin-bottom:56px;
+  box-shadow:0 10px 24px rgba(66,58,62,0.14);
+}
+.featured::before{
+  content:"";
+  position:absolute; top:-14px; left:0; right:0; height:15px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='15'><polygon points='0,15 6,2 11,15 17,3 22,15 28,2 33,15 39,3 44,15' fill='white'/></svg>");
+  background-repeat:repeat-x; background-size:44px 15px;
+}
+.featured .tape{position:absolute; top:-9px; left:44px; width:56px;height:22px; background:repeating-linear-gradient(45deg, var(--mauve), var(--mauve) 5px, #efe8f0 5px, #efe8f0 10px); opacity:0.9; transform:rotate(-5deg); box-shadow:0 1px 2px rgba(0,0,0,0.12);}
+.featured .kicker{font-family:"Klee One", cursive; font-size:0.78rem; color:var(--rose-dark); letter-spacing:0.05em; margin-bottom:14px;}
+.featured blockquote{
+  font-family:"Noto Serif TC", serif;
+  font-size:1.28rem;
+  line-height:2.05;
+  margin:0 0 22px;
+  color:var(--text-main);
+  border-left:3px solid var(--rose);
+  padding-left:20px;
+}
+.featured .title-row{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+.featured h2{font-family:"Klee One", cursive; font-size:1.15rem; margin:0;}
+.featured .read{font-family:"Klee One", cursive; font-size:0.85rem; color:#fff; background:var(--rose); padding:6px 16px; border-radius:4px; text-decoration:none; box-shadow:2px 2px 0 var(--rose-dark);}
+.featured .meta{font-family:"Caveat", cursive; font-size:1rem; font-weight:700; color:var(--text-soft); margin-top:6px;}
+
+/* 近期更新 — 安靜、有秩序、配角 */
+.section-label{font-family:"Klee One", cursive; font-size:0.9rem; color:var(--text-soft); margin:0 0 4px; padding-bottom:10px; border-bottom:1.5px dashed rgba(66,58,62,0.2);}
+.list{margin-top:6px;}
+.row{display:flex; align-items:center; gap:16px; padding:16px 4px; border-bottom:1px solid rgba(66,58,62,0.08);}
+.row .tag{
+  flex:0 0 auto; font-family:"Klee One", cursive; font-size:0.68rem; color:#fff;
+  padding:4px 10px; border-radius:3px; white-space:nowrap;
+}
+.row.gacha .tag{background:var(--rose);}
+.row.chat .tag{background:var(--mustard);}
+.row.project .tag{background:var(--sage);}
+.row.commission .tag{background:var(--mauve);}
+.row .body{flex:1; min-width:0;}
+.row h4{font-family:"Klee One", cursive; font-size:0.98rem; margin:0 0 3px; font-weight:400;}
+.row p{font-size:0.82rem; color:var(--text-soft); margin:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.row .date{flex:0 0 auto; font-family:"Caveat", cursive; font-size:0.95rem; font-weight:700; color:var(--text-soft);}
+
+/* 飄浮小裝飾 */
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--r,0deg));}50%{transform:translateY(-7px) rotate(var(--r,0deg));}}
+.doodle{position:absolute; animation:float 4.5s ease-in-out infinite; pointer-events:none; opacity:0.85;}
+
+/* 企劃 ing 區塊 */
+.ing-section{position:relative; margin:56px 0 56px;}
+.ing-title{display:flex; align-items:center; gap:8px; font-family:"Klee One", cursive; font-size:1.05rem; margin-bottom:18px;}
+.ing-title .pencil{display:inline-block; animation:float 2.4s ease-in-out infinite; --r:-8deg;}
+.ing-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:26px;}
+.ing-card{
+  position:relative; background:var(--bg-card); padding:22px 20px 20px;
+  box-shadow:0 8px 16px rgba(66,58,62,0.12);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ing-card:nth-child(1){transform:rotate(-1.3deg);}
+.ing-card:nth-child(2){transform:rotate(1deg);}
+.ing-card:hover{transform:rotate(0) translateY(-3px); box-shadow:0 14px 22px rgba(66,58,62,0.17);}
+.ing-card::before{
+  content:""; position:absolute; top:-8px; left:16px; width:46px;height:18px;
+  background:repeating-linear-gradient(45deg, var(--sage), var(--sage) 5px, #e9efeb 5px, #e9efeb 10px);
+  opacity:0.9; transform:rotate(-6deg); box-shadow:0 1px 2px rgba(0,0,0,0.1);
+}
+.status{display:inline-flex; align-items:center; gap:6px; font-family:"Klee One", cursive; font-size:0.72rem; color:var(--sage-dark); margin-bottom:10px;}
+.status .dot{width:7px;height:7px;border-radius:50%; background:var(--sage); animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1; transform:scale(1);}50%{opacity:0.35; transform:scale(1.4);}}
+.ing-card h4{font-family:"Klee One", cursive; font-size:1.02rem; margin:0 0 8px;}
+.ing-card p{font-size:0.83rem; color:var(--text-soft); line-height:1.65; margin:0 0 14px;}
+.progress{height:8px; border-radius:5px; background:#EDE6DC; overflow:hidden; position:relative;}
+.progress-fill{
+  height:100%; border-radius:5px;
+  background:repeating-linear-gradient(45deg, var(--rose), var(--rose) 6px, var(--rose-dark) 6px, var(--rose-dark) 12px);
+  background-size:200% 100%;
+  animation:stripes 1.8s linear infinite;
+}
+@keyframes stripes{from{background-position:0 0;}to{background-position:34px 0;}}
+.progress-label{font-family:"Caveat", cursive; font-size:0.9rem; font-weight:700; color:var(--text-soft); margin-top:6px; text-align:right;}

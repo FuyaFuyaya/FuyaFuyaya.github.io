@@ -1,0 +1,97 @@
+<%#
+  themes/landscape/layout/holiday-calendar.ejs
+  節日日曆頁樣板，讀取 source/_data/holidays.yml。
+  新增月份只要在 holidays.yml 底下加一個 month 區塊，這裡會自動印出來。
+
+  對應頁面：source/project/holiday/index.md，front-matter 要寫：
+  ---
+  title: 節日企劃
+  layout: holiday-calendar
+  ---
+%>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title><%= page.title %> · <%= config.title %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<%- url_for('css/base.css') %>">
+<link rel="stylesheet" href="<%- url_for('css/holiday-calendar.css') %>">
+</head>
+<body>
+<div class="spine"><div class="holes"></div><div class="rule"></div></div>
+<div class="tabs">
+<a class="tab home" href="<%- url_for('/') %>">主頁</a>
+<a class="tab gacha" href="<%- url_for('/categories/轉蛋/') %>">轉蛋</a>
+<a class="tab commission" href="<%- url_for('/categories/委託/') %>">委託</a>
+<a class="tab chat" href="<%- url_for('/categories/雜談/') %>">雜談</a>
+<a class="tab project active" href="<%- url_for('/project/') %>">企劃</a>
+</div>
+
+<div class="content-shift">
+<div class="wrap">
+
+<div class="mini-mark"><div class="crumb"><a href="<%- url_for('/') %>">芙婭的文字手帳</a> → <a href="<%- url_for('/project/') %>">企劃</a> → <b>節日企劃</b></div></div>
+
+<%
+var monthsData = (site.data.holidays && site.data.holidays.months) || [];
+monthsData.forEach(function(m){
+  var daysInMonth = new Date(m.year, m.month, 0).getDate();
+  var dayMap = {};
+  (m.days || []).forEach(function(d){ dayMap[d.day] = d; });
+  var skipNext = {};
+  (m.days || []).forEach(function(d){
+    if (d.tier === 'qixi') { skipNext[d.day + 1] = true; }
+  });
+%>
+<div class="page-title"><%= m.title %></div>
+<div class="page-sub"><%= m.subtitle %></div>
+
+<div class="cal">
+<div class="wd">日</div><div class="wd">一</div><div class="wd">二</div><div class="wd">三</div><div class="wd">四</div><div class="wd">五</div><div class="wd">六</div>
+
+<% for (var e = 0; e < (m.empty_lead || 0); e++) { %><div class="day empty"></div><% } %>
+
+<% for (var dnum = 1; dnum <= daysInMonth; dnum++) {
+  if (skipNext[dnum]) { continue; }
+  var entry = dayMap[dnum];
+
+  if (!entry) { %>
+<div class="day"><span class="num"><%= dnum %></span></div>
+<% } else if (entry.tier === 'jot') { %>
+<div class="day d-<%= entry.color %><%= entry.italic ? ' italic' : '' %>"><span class="num"><%= dnum %></span><span class="jot"><%- entry.label %></span></div>
+<% } else if (entry.tier === 'note') { %>
+<div class="day"><span class="num"><%= dnum %></span>
+  <div class="note"><span class="tape"></span><span class="num"><%= dnum %></span><span class="label"><%- entry.label %></span></div>
+</div>
+<% } else if (entry.tier === 'flag') { %>
+<div class="day d-flag"><span class="num"><%= dnum %></span><span class="flag"><%- entry.label %></span></div>
+<% } else if (entry.tier === 'qixi') { %>
+<div class="day qixi">
+  <div class="qixi-note">
+    <div class="qixi-head"><span class="num"><%= dnum %></span><span class="tag"><%= entry.tag %></span></div>
+    <div class="mini-stack">
+    <% (entry.cps || []).forEach(function(cp){ %>
+      <a href="#"><b><%= cp.name %></b> — <%= cp.note %></a>
+    <% }); %>
+    </div>
+  </div>
+</div>
+<% } %>
+<% } %>
+
+<% for (var t = 0; t < (m.empty_trail || 0); t++) { %><div class="day empty"></div><% } %>
+</div>
+<% }); %>
+
+<div class="legend">
+<span><i class="mk-jot"></i>手寫小記（大多數節日）</span>
+<span><i class="mk-flag"></i>膠帶小旗（偶爾用）</span>
+<span><i class="mk-note"></i>貼紙便條（少數特別的）</span>
+</div>
+
+</div>
+</div>
+</body>
+</html>

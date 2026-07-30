@@ -1,0 +1,29 @@
+# source/_data/projects.yml
+# 企劃索引頁讀取的資料。要新增/調整企劃時，只要改這份檔案，不用動樣板。
+# status 可用值：doing（製作中）／think（整理中）／idea（構思中）
+# progress：0~100 的數字，doing/think 才需要
+# link：連到該企劃的子頁路徑
+
+- id: holiday
+  status: doing
+  status_label: 製作中
+  title: 節日企劃
+  description: 整理一整年的主要與冷門節日，做成可愛日曆呈現，還會開噗浪主題台同樂。
+  progress: 42
+  link: /project/holiday/
+
+- id: valentine12
+  status: think
+  status_label: 整理中
+  title: 12 個情人節
+  description: 每年 12 個月的 14 號都是情人節，用骰子決定蛋主家的小情侶要過幾月情人節。呈現方式還沒想好。
+  progress: 8
+  link: /project/valentine12/
+
+- id: placeholder
+  status: idea
+  status_label: 還沒開始
+  title: 下一個企劃
+  description: ""
+  progress: 0
+  link: ""

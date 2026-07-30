@@ -1,0 +1,52 @@
+# source/_data/holidays.yml
+# 節日日曆頁讀取的資料，之後新增其他月份，往下加一個 month 區塊就好。
+#
+# tier 可用值：
+#   jot   -> 手寫小記（多數節日，日期下墊一行彩色小字，無卡片無膠帶）
+#   flag  -> 膠帶小旗（偶爾用）
+#   note  -> 貼紙便條（少數特別節日，撕邊+紙膠帶）
+#   qixi  -> 七夕特別格（跨兩欄，純文字 CP 清單，目前只有七夕在用這個格式）
+#
+# empty_lead / empty_trail：該月第一週前 / 最後一週後要留幾個空白格，對齊星期幾
+
+months:
+  - year: 2026
+    month: 8
+    title: "2026 年 8 月"
+    subtitle: "今年的第一個月，跟著蛋主們一起過節～"
+    empty_lead: 6
+    empty_trail: 0
+    days:
+      - day: 7
+        tier: jot
+        color: mustard
+        label: "🍺 啤酒日"
+      - day: 8
+        tier: note
+        label: "🐱 貓咪日"
+      - day: 13
+        tier: jot
+        color: ghost
+        label: "✋ 左撇子日<br>👻 鬼門開"
+      - day: 15
+        tier: jot
+        color: sage
+        label: "🐾 流浪動物日"
+      - day: 19
+        tier: qixi
+        tag: "七夕・攝影日"
+        cps:
+          - name: "阿諾×小夜"
+            note: "去看了流星雨"
+          - name: "司予×雲雁"
+            note: "頂樓野餐約會"
+          - name: "渡×淺見"
+            note: "互拍拍立得"
+      - day: 22
+        tier: jot
+        color: rose
+        italic: true
+        label: "帶貓看獸醫"
+      - day: 26
+        tier: flag
+        label: "🐶 狗狗日"

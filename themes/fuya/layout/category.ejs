@@ -1,0 +1,123 @@
+<%#
+  themes/fuya/layout/category.ejs
+  取代 landscape 原本的 category.ejs。
+  轉蛋、委託（未來雜談若採用相同清單卡片系統也可）共用這份樣板。
+  用 page.category.name 判斷目前是哪個分類，決定主色系 tab 高亮，
+  以及是否顯示委託專屬的「委託方向／篇幅」資訊標籤。
+
+  轉蛋文章 front-matter 慣例：
+  ---
+  title: 頂樓的流星，遲來的告白
+  date: 2026-07-14
+  categories: [轉蛋]
+  excerpt: 「情人節不用等到二月...」
+  featured: true
+  ---
+
+  委託文章 front-matter 慣例（比轉蛋多兩個欄位）：
+  ---
+  title: 遲到的道歉信
+  date: 2026-07-24
+  categories: [委託]
+  excerpt: 「委託單上只寫了『想要一個會道歉的角色』...」
+  featured: true
+  commission_type: 校園向
+  word_count_label: 短篇・2K 字
+  ---
+%>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title><%= page.category.name %> · <%= config.title %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<%- url_for('css/base.css') %>">
+<link rel="stylesheet" href="<%- url_for('css/category.css') %>">
+</head>
+<body>
+<div class="spine"><div class="holes"></div><div class="rule"></div></div>
+
+<%
+var catName = page.category.name;
+var isCommission = (catName === '委託');
+%>
+
+<div class="tabs">
+<a class="tab home" href="<%- url_for('/') %>">主頁</a>
+<a class="tab gacha<%= catName === '轉蛋' ? ' active' : '' %>" href="<%- url_for('/categories/轉蛋/') %>">轉蛋</a>
+<a class="tab commission<%= catName === '委託' ? ' active' : '' %>" href="<%- url_for('/categories/委託/') %>">委託</a>
+<a class="tab chat<%= catName === '雜談' ? ' active' : '' %>" href="<%- url_for('/categories/雜談/') %>">雜談</a>
+<a class="tab project" href="<%- url_for('/project/') %>">企劃</a>
+</div>
+
+<div class="content-shift">
+<div class="wrap">
+
+<div class="mini-mark"><div class="crumb">芙婭的文字手帳 → <b><%= catName %>作品</b></div></div>
+<div class="page-title"><%= catName %>作品<%= isCommission ? ' · 接稿紀錄' : ' · 作品集' %></div>
+
+<%
+/* page.posts 是 Hexo 分類頁自動提供的當前分類文章集合 */
+var posts = page.posts.sort('date', -1).data;
+var featuredPost = posts.find(function(p){ return p.featured; }) || posts[0];
+var rest = posts.filter(function(p){ return !featuredPost || p.path !== featuredPost.path; });
+var midPosts = rest.slice(0, 2);
+var lightPosts = rest.slice(2, 8);
+%>
+
+<% if (featuredPost) { %>
+<div class="quote-card">
+  <div class="tape"></div>
+  <div class="kicker">最新 · <%= date(featuredPost.date, 'YYYY.MM.DD') %></div>
+  <% if (isCommission) { %>
+  <div class="info-tags">
+    <% if (featuredPost.commission_type) { %><span class="info-tag"><%= featuredPost.commission_type %></span><% } %>
+    <% if (featuredPost.word_count_label) { %><span class="info-tag length"><%= featuredPost.word_count_label %></span><% } %>
+  </div>
+  <% } %>
+  <blockquote><%= featuredPost.excerpt || featuredPost.description || '' %></blockquote>
+  <div class="title-row">
+    <div><h3><%= featuredPost.title %></h3></div>
+    <a class="read" href="<%- url_for(featuredPost.path) %>">閱讀全文 →</a>
+  </div>
+</div>
+<% } %>
+
+<% midPosts.forEach(function(p, i){ var variant = i === 0 ? 'v1' : 'v2'; %>
+<div class="mid-card <%= variant %>">
+  <% if (variant === 'v1') { %><div class="tape"></div><% } %>
+  <% if (isCommission) { %>
+  <div class="info-tags">
+    <% if (p.commission_type) { %><span class="info-tag"><%= p.commission_type %></span><% } %>
+    <% if (p.word_count_label) { %><span class="info-tag length"><%= p.word_count_label %></span><% } %>
+  </div>
+  <% } %>
+  <p class="snippet"><%= p.excerpt || '' %></p>
+  <div class="title-row">
+    <h4><a href="<%- url_for(p.path) %>" style="color:inherit; text-decoration:none;"><%= p.title %></a></h4>
+    <span class="date-stamp"><%= date(p.date, 'MM.DD') %></span>
+  </div>
+</div>
+<% }); %>
+
+<% if (lightPosts.length) { %>
+<div class="section-label">更早之前</div>
+<% lightPosts.forEach(function(p){ %>
+<div class="light-row">
+  <div class="body">
+    <h5><a href="<%- url_for(p.path) %>" style="color:inherit; text-decoration:none;"><%= p.title %></a></h5>
+    <% if (isCommission && (p.commission_type || p.word_count_label)) { %>
+    <span class="mini-tag"><%= [p.commission_type, p.word_count_label].filter(Boolean).join('・') %></span>
+    <% } %>
+  </div>
+  <span class="date"><%= date(p.date, 'MM.DD') %></span>
+</div>
+<% }); %>
+</div>
+<% } %>
+
+</div>
+</div>
+</body>
+</html>

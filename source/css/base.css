@@ -1,0 +1,57 @@
+/* ============================================
+   source/css/base.css
+   共用樣式：色彩變數、字體、書脊、右側導覽標籤、圓點紋背景
+   （維持原本雛形的撕邊＋紙膠帶＋立體陰影手帳風方向）
+   ============================================ */
+
+:root{
+  --bg-base:#F7F3ED;
+  --bg-card:#FFFDF9;
+  --text-main:#423A3E;
+  --text-soft:#8D8086;
+  --rose:#B98289; --rose-dark:#8f5f65;
+  --sage:#7E9384; --sage-dark:#5f736a;
+  --mauve:#9C8AA5; --mauve-dark:#786589;
+  --mustard:#C9A054; --mustard-dark:#a67e37;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(circle, rgba(66,58,62,0.05) 1px, transparent 1.2px) 0 0/22px 22px,
+    var(--bg-base);
+  font-family:"Noto Sans TC", sans-serif;
+  color:var(--text-main);
+}
+
+/* ---- 書脊（左側固定裝訂條）---- */
+.spine{position:fixed;top:0;left:0;bottom:0;width:56px;background:#EDE6DC;border-right:2px solid rgba(66,58,62,0.10);z-index:5;}
+.spine .rule{position:absolute; left:44px; top:0; bottom:0; width:2px; background:rgba(185,130,137,0.35);}
+.spine .holes{position:absolute; left:0; top:0; width:100%; height:100%; background-image: radial-gradient(circle, var(--bg-base) 6px, transparent 6.5px); background-size: 56px 64px; background-position: 28px 40px;}
+
+.content-shift{padding-left:80px;padding-right:64px;}
+.wrap{max-width:800px;margin:0 auto;padding:44px 24px 100px;}
+
+@media (max-width:760px){
+  .spine{display:none;}
+  .content-shift{padding-left:0 !important;padding-right:0 !important;}
+  .tabs{right:8px !important;}
+}
+
+/* ---- 右側浮動索引標籤導覽 ---- */
+.tabs{position:fixed; top:120px; right:24px; z-index:6; display:flex; flex-direction:column; gap:10px; align-items:flex-end;}
+.tab{font-family:"Klee One", cursive; font-size:0.82rem; padding:8px 10px 8px 16px; border-radius:6px 0 0 6px; color:#fff; box-shadow:-2px 2px 4px rgba(66,58,62,0.15); cursor:pointer; transform:translateX(10px); transition:transform 0.15s ease; text-decoration:none; display:block;}
+.tab:hover{transform:translateX(0);}
+.tab.active{transform:translateX(-6px); font-weight:600;}
+.tab.home{background:var(--text-main);}
+.tab.gacha{background:var(--rose);}
+.tab.commission{background:var(--mauve);}
+.tab.chat{background:var(--mustard);}
+.tab.project{background:var(--sage);}
+
+/* ---- 麵包屑 ---- */
+.mini-mark{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+.mini-mark .crumb{font-family:"Klee One", cursive; font-size:0.95rem; color:var(--text-soft);}
+.mini-mark .crumb b{font-weight:600;}
+.mini-mark .crumb a{color:inherit; text-decoration:none;}
+.mini-mark .crumb a:hover{text-decoration:underline;}

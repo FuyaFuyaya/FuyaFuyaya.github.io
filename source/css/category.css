@@ -1,0 +1,105 @@
+/*
+  source/css/category.css
+  轉蛋分類頁、委託分類頁共用樣式。
+  假設 mini-mark / page-title / section-label 已定義在 base.css 中，這裡不重複。
+  --rose / --mauve / --sage / --mustard 等色彩變數同樣沿用 base.css 的 :root 定義。
+
+  頁面對應：
+  - 轉蛋分類頁：主色使用 --rose / --rose-dark
+  - 委託分類頁：主色使用 --mauve / --mauve-dark（因委託 tab 本身即為 mauve 色系）
+  兩頁只要在各自 layout 裡把 quote-card 的 tape 顏色、kicker 顏色改成對應色系即可，
+  結構與 class 名稱完全共用。
+*/
+
+/* 角度統一收在 -1.2°~1° 之間，層次感靠有沒有紙膠帶/撕邊而非角度大小做區別 */
+
+.quote-card{
+  position:relative;
+  background:var(--bg-card);
+  padding:38px 34px 28px;
+  margin-bottom:40px;
+  box-shadow:0 10px 22px rgba(66,58,62,0.13);
+  transform:rotate(-0.6deg);
+}
+.quote-card::before{
+  content:"";
+  position:absolute; top:-13px; left:0; right:0; height:14px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='14'><polygon points='0,14 5,2 10,14 15,3 20,14 25,2 30,14 35,3 40,14' fill='white'/></svg>");
+  background-repeat:repeat-x; background-size:40px 14px;
+}
+.quote-card .tape{
+  position:absolute; top:-8px; left:38px; width:50px; height:20px;
+  background:repeating-linear-gradient(45deg, var(--mauve), var(--mauve) 5px, #efe8f0 5px, #efe8f0 10px);
+  opacity:0.9; transform:rotate(-6deg);
+}
+.quote-card .kicker{
+  font-family:"Klee One", cursive; font-size:0.7rem; color:var(--mauve-dark);
+  letter-spacing:0.05em; margin-bottom:12px;
+}
+.quote-card blockquote{
+  font-family:"Noto Serif TC", serif; font-size:1.18rem; line-height:1.95;
+  margin:0 0 18px; border-left:3px solid var(--mauve); padding-left:18px;
+}
+.quote-card .title-row{
+  display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.quote-card h3{font-family:"Klee One", cursive; font-size:1.05rem; margin:0;}
+.quote-card .read{
+  font-family:"Klee One", cursive; font-size:0.82rem; color:#fff; background:var(--mauve);
+  padding:6px 15px; border-radius:4px; text-decoration:none; box-shadow:2px 2px 0 var(--mauve-dark);
+}
+
+.date-stamp{
+  font-family:"Caveat", cursive; font-size:0.95rem; font-weight:700;
+  color:var(--text-soft); margin-top:5px; display:inline-block;
+}
+
+.mid-card{
+  position:relative; background:var(--bg-card); padding:22px 22px 18px;
+  margin-bottom:30px; box-shadow:0 6px 14px rgba(66,58,62,0.11);
+}
+.mid-card p.snippet{
+  font-family:"Noto Serif TC", serif; font-size:0.95rem; color:var(--text-main);
+  margin:6px 0 10px; line-height:1.75;
+}
+.mid-card .title-row{
+  display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;
+}
+.mid-card h4{
+  font-family:"Klee One", cursive; font-size:0.92rem; margin:0; color:var(--text-soft); font-weight:400;
+}
+
+/* v1 — 紙膠帶+撕邊，較顯眼的一層 */
+.mid-card.v1{transform:rotate(-1deg);}
+.mid-card.v1::before{
+  content:"";
+  position:absolute; top:-11px; left:0; right:0; height:12px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='12'><polygon points='0,12 4,2 8,12 13,3 17,12 21,2 26,12 30,3 34,12' fill='white'/></svg>");
+  background-repeat:repeat-x; background-size:34px 12px;
+}
+.mid-card.v1 .tape{
+  position:absolute; top:-7px; left:22px; width:44px; height:18px;
+  background:repeating-linear-gradient(90deg, var(--sage), var(--sage) 4px, #eef2ef 4px, #eef2ef 8px);
+  opacity:0.9; transform:rotate(5deg); box-shadow:0 1px 2px rgba(0,0,0,0.12);
+}
+
+/* v2 — 素樸無裝飾，乾淨一張紙的感覺 */
+.mid-card.v2{transform:rotate(0.7deg); box-shadow:0 4px 10px rgba(66,58,62,0.09);}
+
+/* 委託頁專屬：委託方向／篇幅小標籤。轉蛋頁不使用這組 class，留著給委託頁 layout 呼叫即可，
+   不影響轉蛋頁的渲染（未使用的 class 不會出現在畫面上）。 */
+.info-tags{display:flex; gap:8px; margin-bottom:10px;}
+.info-tag{
+  font-family:"Klee One", cursive; font-size:0.68rem; padding:3px 10px; border-radius:999px;
+  background:rgba(156,138,165,0.14); color:var(--mauve-dark);
+}
+.info-tag.length{background:rgba(126,147,132,0.14); color:var(--sage-dark);}
+
+.light-row{
+  display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+  padding:11px 4px; border-bottom:1px solid rgba(66,58,62,0.07);
+}
+.light-row .body{display:flex; align-items:baseline; gap:8px; min-width:0; flex-wrap:wrap;}
+.light-row h5{font-family:"Klee One", cursive; font-size:0.88rem; margin:0; font-weight:400; color:var(--text-main);}
+.light-row .mini-tag{font-family:"Klee One", cursive; font-size:0.68rem; color:var(--text-soft); opacity:0.8;}
+.light-row .date{font-family:"Caveat", cursive; font-size:0.85rem; color:var(--text-soft); flex:0 0 auto;}
