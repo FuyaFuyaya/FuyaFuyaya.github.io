@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+:root {
+  --rosewood: #a35d6a;
+  --sage: #849b87;
+  --oat: #f4efe6;
+  --paper: #fcfaf7;
+  --ink: #3c3836;
+  --tape: rgba(226, 192, 141, 0.6);
+}
+
+/* 開場動畫遮罩容器 */
+#intro-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--oat);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+/* 動畫結束後的向上滑出狀態 */
+body.intro-done #intro-stage {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.svg-container {
+  width: 100%;
+  max-width: 320px;
+}
+
+.intro-svg {
+  width: 100%;
+  height: auto;
+}
+
+/* SVG 線條手繪效果 */
+.draw-path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2.5s ease-in-out forwards;
+}
+
+.washi-tape {
+  fill: var(--tape);
+  stroke: none;
+  opacity: 0;
+  animation: fadeInTape 0.8s ease forwards 1.2s;
+}
+
+/* 貓咪印章蓋章效果 */
+.stamp-group {
+  opacity: 0;
+  transform-origin: 260px 130px;
+  animation: stampDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 2.2s;
+}
+
+.stamp-bg {
+  fill: var(--rosewood);
+  opacity: 0.85;
+}
+
+.stamp-icon {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+/* 文字淡入 */
+.intro-text-group {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.8s ease forwards 2.6s;
+}
+
+.intro-title {
+  font-family: 'Klee One', serif;
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.intro-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--rosewood);
+  margin-top: 0.2rem;
+}
+
+/* 跳過 / ENTER 按鈕 */
+.enter-btn {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.8s ease forwards 3s;
+  background: transparent;
+  border: 1.5px solid var(--rosewood);
+  color: var(--rosewood);
+  padding: 0.5rem 1.4rem;
+  border-radius: 20px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.enter-btn:hover {
+  background-color: var(--rosewood);
+  color: var(--paper);
+}
+
+/* 動畫關鍵影格 */
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeInTape {
+  to { opacity: 1; }
+}
+
+@keyframes stampDown {
+  0% {
+    opacity: 0;
+    transform: scale(3) rotate(-15deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,17 +1,6 @@
 <%#
-  themes/landscape/layout/index.ejs
-  首頁樣板。取代 landscape 原本的 index.ejs。
-  （視覺方向：維持原本雛形的撕邊＋紙膠帶＋立體陰影手帳風，盐系扁平色塊方向已取消）
-
-  文章 front-matter 慣例（Decap CMS 欄位設計時要對齊）：
-  ---
-  title: 頂樓的流星，遲來的告白
-  date: 2026-07-14
-  categories: [轉蛋]
-  excerpt: 「情人節不用等到二月...」
-  featured: true
-  ---
-  企劃 ing 卡片讀取 categories: [企劃] 且有 status / progress / summary 欄位的文章
+  themes/fuya/layout/index.ejs
+  手帳風首頁樣板（整合示範版動畫）
 %>
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -22,8 +11,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%- url_for('css/base.css') %>">
 <link rel="stylesheet" href="<%- url_for('css/home.css') %>">
+<!-- 引入示範版的 CSS -->
+<%- css('css/intro.css') %>
 </head>
-<body>
+<body class="intro-active">
+
+<!-- 引入示範版動畫組件 -->
+<%- partial('_partial/intro') %>
 
 <div class="spine"><div class="holes"></div><div class="rule"></div></div>
 
@@ -56,7 +50,6 @@
 </div>
 
 <%
-/* 精選文章：優先抓 front-matter 有 featured:true 的，沒有就抓全站最新一篇 */
 var featuredPost = site.posts.data.find(function(p){ return p.featured; });
 if (!featuredPost) { featuredPost = site.posts.sort('date', -1).data[0]; }
 %>
@@ -76,7 +69,6 @@ if (!featuredPost) { featuredPost = site.posts.sort('date', -1).data[0]; }
 <% } %>
 
 <%
-/* 企劃 ing：categories 含「企劃」、且 status 不是「已完成」的文章 */
 var ingPosts = site.posts.data.filter(function(p){
   var cats = p.categories ? p.categories.data.map(function(c){ return c.name; }) : [];
   return cats.indexOf('企劃') !== -1 && p.status && p.status !== '已完成';
@@ -123,5 +115,8 @@ var cls = catClass[cat] || '';
 
 </div>
 </div>
+
+<!-- 引入示範版的 JS -->
+<%- js('js/intro.js') %>
 </body>
 </html>
